@@ -1,0 +1,267 @@
+body {
+    padding: 16px;
+}
+
+textarea {
+    width: 100%;
+    height: 100px;
+}
+
+button {
+    margin-top: 10px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.response {
+    font-family: 'JetBrains Mono';
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+div.response > p, h1, h2, h3, h4, ol, ul, li {
+    margin-top: 10px;
+    margin-bottom: 0;
+    line-height: 1.6;
+}
+
+#input-div {
+    padding: 8px;
+    padding-right: 24px;
+    border-radius: 8px;
+    border: 1px solid;
+    border-color: var(--vscode-activityBar-background);
+}
+
+#input {
+    padding: 8px;
+    border-radius: 4px;
+    letter-spacing: 1px;
+    font-size: 14px;
+    font-family: 'JetBrains Mono';
+    border: 0;
+    outline: none;
+    border: none;
+    resize: none;
+    background-color: var(--vscode-tab-inactiveBackground);
+    color: var(--vscode-foreground);
+}
+
+#input-buttons-div {
+    padding-left: 5px;
+    padding-right: 5px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.input-button {
+    margin-top: 2px;
+    font-weight: 600;
+    border-radius: 2px;
+    border: none;
+    letter-spacing: 1px;
+    font-size: 14px;
+    font-family: 'JetBrains Mono';
+    background-color: var(--vscode-background);
+    color: var(--vscode-foreground);
+}
+
+.input-button:hover {
+    background-color: var(--vscode-tab-inactiveBackground);
+}
+
+#div-copy {
+    margin-top: 10px;
+    background-color: var(--vscode-activityBar-background);
+}
+
+#copy-button {
+    margin: 0;
+    background-color: var(--vscode-activityBar-background);
+    float: right;
+    margin-top: 5px;
+    margin-right: 5px;
+    font-family: 'JetBrains Mono';
+    color: var(--vscode-foreground);
+    border-radius: 5px;
+    border-width: 0;
+    font-size: 14px;
+}
+
+#copy-button:hover {
+    background-color: var(--vscode-background);
+}
+
+pre {
+    margin: 0;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+#add-file {
+    font-family: 'JetBrains Mono';
+    font-size: 20px;
+    margin-top: 0;
+    margin-left: 10px;
+    width: 30px;
+    height: 30px; 
+    padding: 0;
+    margin-top: auto;
+    margin-bottom: auto;
+    border-radius: 3px;
+    border: none;
+    display: flex; /* Center the content inside */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    background-color: var(--vscode-activityBar-background);
+    color: var(--vscode-foreground);
+}
+
+#add-file:hover {
+    font-size: 24px;
+    transition: font-size 0.1s ease-in-out; 
+}
+
+#filename-list {
+    list-style-type: none;
+    margin: 0;
+    padding-left: 0;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.minus-file {
+    font-family: 'JetBrains Mono';
+    font-size: 22px;
+    margin: 0;
+    padding: 0;
+    width: 22px;
+    height: 22px; 
+    border-radius: 3px;
+    border: none;
+    background-color: var(--vscode-activityBar-background);
+    color: var(--vscode-foreground);
+    margin-left: 10px;
+    display: flex; /* Center the content inside */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+}
+
+.minus-file:hover {
+    font-size: 24px;
+    transition: font-size 0.1s ease-in-out; 
+}
+
+.filename-li {
+    display: flex;
+    font-family: 'JetBrains Mono';
+    color: var(--vscode-foreground);
+    background-color: var(--vscode-background);
+    border: 1px solid;
+    border-color: var(--vscode-activityBar-background);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 6px 12px 6px 12px;
+    border-radius: 4px;
+    margin-top: 0;
+}
+
+.filename {
+    margin: 0;
+    line-height: 1;
+    align-self: center;
+}
+
+/* override highlight.js config */
+
+.hljs {
+    background: var(--vscode-tab-inactiveBackground) !important;
+    border-radius: 5px;
+    border-radius: 5px; 
+    padding: 10px;
+}
+
+code {
+    background-color: var(--vscode-tab-inactiveBackground) !important;
+}
+#conversation-history {
+    margin-top: 20px;
+}
+details {
+    margin-bottom: 10px;
+    border: 1px solid;
+    border-radius: 4px;
+    background-color: var(--vscode-tab-inactiveBackground)
+}
+details summary {
+    font-family: 'JetBrains Mono', monospace;
+    padding: 10px 15px;
+    text-indent: 5px;
+    font-weight: bold;
+    cursor: pointer;
+}
+details > div {
+    padding: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    background-color: var(--vscode-editor-background);
+    color: var(--vscode-foreground);
+    border-radius: 4px;
+}
+.response {
+    font-family: 'JetBrains Mono';
+    margin-top: 20px;
+    font-size: 14px;
+    color: var(--vscode-foreground);
+}
+.history-content {
+    padding: 10px;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+/* Processing in Chat */
+.loading-animation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    margin: 0 5px;
+    border-radius: 50%;
+    animation: 
+        bounce 0.5s ease-in infinite alternate,
+        colorChange 2s infinite alternate;
+}
+
+.dot1 { 
+    animation-delay: 0s; 
+}
+.dot2 { 
+    animation-delay: 0.1s; 
+}
+.dot3 { 
+    animation-delay: 0.2s; 
+}
+
+@keyframes bounce {
+    from {
+        transform: translateY(0);
+    }
+    to {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes colorChange {
+    0% { background-color: #FF0000; }
+    16% { background-color: #FF8C00; }
+    33% { background-color: #FFFF00; }
+    50% { background-color: #008000; }
+    66% { background-color: #0000FF; }
+    83% { background-color: #800080; }
+    100% { background-color: #FF0000; }
+}

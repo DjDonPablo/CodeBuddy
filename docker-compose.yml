@@ -1,0 +1,39 @@
+services:
+  extension:
+    network_mode: "host"
+    build: ./extension/
+    ports:
+      - "8080:8080"
+
+  ollama:
+    image: ollama/ollama:0.4.1
+    healthcheck:
+      test: ollama -v
+      interval: 5s
+      retries: 5
+      timeout: 5s
+
+  ollama-setup:
+    image: curlimages/curl:8.2.1
+    depends_on:
+      ollama:
+        condition: service_healthy
+    command:
+      - /bin/sh
+      - -c
+      - |
+        curl http://ollama:11434/api/pull -d '{"name": "qwen2.5-coder:3b"}'
+        curl http://ollama:11434/api/generate -d '{"model": "qwen2.5-coder:3b"}'
+        curl http://ollama:11434/api/pull -d '{"name": "qwen2.5-coder:3b-base"}'
+        curl http://ollama:11434/api/generate -d '{"model": "qwen2.5-coder:3b-base"}'
+
+  server:
+    build: ./server/
+    ports:
+      - ${CODEBUDDY_SERVER_PORT:6969}:8000
+    depends_on:
+      - extension
+      - ollama
+      - ollama-setup
+    environment:
+      - OLLAMA_SERVER_URL=http://ollama:11434

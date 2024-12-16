@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeBuddy Assistant</title>
+    <link rel="stylesheet" href="webview.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.10.0/styles/arduino-light.css">
+    <link href='https://fonts.googleapis.com/css?family=JetBrains Mono' rel='stylesheet'>
+</head>
+<body>
+    <div style="display: flex; margin-bottom: 10px;">
+        <ol id="filename-list"></ol>
+        <button id="add-file">+</button>
+    </div>
+    <div id="input-div">
+        <textarea id="input" placeholder="ask me anything"></textarea>
+        <div id="input-buttons-div">
+            <button class="input-button">🧠 qwen 3B</button>
+            <button class="input-button" id="chat">⏎ chat</button>
+        </div>
+    </div>
+    <div class="response" id="response"></div>
+
+    <script>
+        const vscode = acquireVsCodeApi();
+
+        let lastDetailsElement = null; // Keep track of the last created details element
+
+        // request for chat
+        document.getElementById('chat').addEventListener('click', () => {
+            const input = document.getElementById('input').value;
+
+            const list = document.getElementById("filename-list");
+            const listItems = document.getElementsByClassName("filename-li");
+            let filenames = []
+            for (let i = 0; i < listItems.length; i++) {
+                const filenameElement = listItems[i].querySelector(".filename");
+                filenames.push(filenameElement.textContent)
+            }
+
+            // Create details element (where all chats are stocked)
+            const responseElement = document.getElementById('response');
+            const newDetailsElement = document.createElement('details');
+            newDetailsElement.open = true;
+    
+            const summaryElement = document.createElement('summary');
+            summaryElement.textContent = filenames.length > 0 
+                ? `${input}  [${filenames.join(', ')}]` 
+                : input;
+    
+            const responseContentDiv = document.createElement('div');
+            responseContentDiv.innerHTML = `
+                <div class="loading-animation">
+                    <div class="dot dot1"></div>
+                    <div class="dot dot2"></div>
+                    <div class="dot dot3"></div>
+                </div>
+            `;
+    
+            newDetailsElement.appendChild(summaryElement);
+            newDetailsElement.appendChild(responseContentDiv);
+    
+            // Couldn't find a way to do with ID so we always take the last one created
+            lastDetailsElement = newDetailsElement;
+    
+            responseElement.insertBefore(newDetailsElement, responseElement.firstChild);
+
+            vscode.postMessage({
+                command: 'submitPrompt',
+                text: input,
+                filenames: filenames
+            });
+        });
+
+        // event listener to add a file to the context (other current one)
+        document.getElementById('add-file').addEventListener('click', () => {
+            vscode.postMessage({ command: 'chooseFile' });
+        });
+
+        // handle message from vscode
+        window.addEventListener('message', event => {
+            const message = event.data;
+            if (message.command === 'showResponse') {
+                if (lastDetailsElement) {
+                    const contentDiv = lastDetailsElement.querySelector('div');
+                    contentDiv.innerHTML = message.response;
+                } else {
+                    console.error('No details element found to append the response.');
+                }
+            } else if (message.command === "contextFile") {
+                const list = document.getElementById("filename-list");
+                const listItems = document.getElementsByClassName("filename-li");
+                for (let i = 0; i < listItems.length; i++) {
+                    const filenameElement = listItems[i].querySelector(".filename");
+                    
+                    if (filenameElement.textContent === message.fileName) {
+                        console.error("File is already in the list")
+                        return
+                    }
+                }
+
+                const newLi = document.createElement("li");
+                newLi.className = "filename-li";
+                newLi.innerHTML = `<p class="filename">${message.fileName}</p><button class="minus-file" onclick="removeContextFile(this)">-</button>`;
+                
+                list.appendChild(newLi);
+            }
+        });
+
+        function copyCode(button) {
+            const parentDiv = button.parentElement;
+            const preTag = parentDiv.nextElementSibling;
+
+            console.log(window.currentFileName)
+
+            if (preTag && preTag.tagName.toLowerCase() === 'pre') {
+                navigator.clipboard.writeText(atob(preTag.getAttribute("data-code")))
+                    .then(() => {
+                        button.textContent = 'copied!';
+                        setTimeout(() => { button.textContent = 'copy'; }, 1000);
+                    })
+                    .catch(err => console.error('Failed to copy:', err));
+            }
+        }
+
+        function removeContextFile(button) {
+            button.closest("li").remove()
+        }
+    </script>
+</body>
+</html>

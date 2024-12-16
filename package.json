@@ -1,0 +1,64 @@
+{
+  "name": "codebuddy",
+  "displayName": "CodeBuddy",
+  "description": "",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.95.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./src/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "codebuddy.promptUser",
+        "title": "Ask CodeBuddy for Code Assistance"
+      }
+    ],
+    "configuration": {
+      "title": "CodeBuddy",
+      "properties": {
+        "CodeBuddy.server_port": {
+          "type": "string",
+          "default": "6969",
+          "description": "The port of the server running in docker."
+        },
+        "CoderBuddy.autocomplete": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable or disable autocomplete."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "watch": "nodemon extension.js",
+    "lint": "eslint .",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.9",
+    "@types/node": "20.x",
+    "@types/vscode": "^1.95.0",
+    "@typescript-eslint/eslint-plugin": "^8.10.0",
+    "@typescript-eslint/parser": "^8.7.0",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.4.1",
+    "eslint": "^9.13.0",
+    "typescript": "^5.6.3",
+    "vscode": "^1.1.37"
+  },
+  "dependencies": {
+    "@vscode/vsce": "^3.2.1",
+    "axios": "^1.7.7",
+    "clipboard": "^2.0.11",
+    "highlight.js": "^11.10.0",
+    "lodash": "^4.17.21",
+    "markdown-it": "^14.1.0"
+  }
+}
