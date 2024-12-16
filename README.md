@@ -1,4 +1,6 @@
-![CodeBuddy Logo](/assets/logo.png")
+<p align="center">
+  <img src="/assets/logo.png" alt="CodeBuddy Logo" width="200"/>
+</p>
 
 <div align="center"><h1>Use CodeBuddy to empower your coding experience with AI !</h1></div>
 
@@ -18,7 +20,7 @@ What's great is that you can choose which models you want to use ! By default, w
 ## Extension settings
 
 - `CodeBuddy: Server_port`: server's port to interact with models. Refer to the section [Extension configuration](#extension-configuration) if you want to change this value.
-- `CodeBuddy: Autocomplete`: enable or disable the autocompletion. If you really don't want the autocomplete at anytime, you can set the environment variable `CODEBUDDY_DISABLE_AUTOCOMPLETE` to `true`.
+- `CodeBuddy: Autocomplete`: enable or disable the autocompletion. If you really don't want the autocompletion at anytime, you can set the environment variable `CODEBUDDY_DISABLE_AUTOCOMPLETE` to `true`.
 
 ## Extension configuration
 
